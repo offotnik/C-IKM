@@ -1,0 +1,105 @@
+CREATE SEQUENCE IF NOT EXISTS authors_seq;
+CREATE SEQUENCE IF NOT EXISTS readers_seq;
+CREATE SEQUENCE IF NOT EXISTS books_seq;
+CREATE SEQUENCE IF NOT EXISTS copies_seq;
+CREATE SEQUENCE IF NOT EXISTS loans_seq;
+CREATE SEQUENCE IF NOT EXISTS blocks_seq;
+
+
+CREATE TABLE Authors (
+    author_id integer PRIMARY KEY DEFAULT nextval('authors_seq'),
+    last_name text NOT NULL,
+    first_name text NOT NULL,
+    middle_name text
+);
+
+
+CREATE TABLE Readers (
+    user_id integer PRIMARY KEY DEFAULT nextval('readers_seq'),
+    last_name text NOT NULL,
+    first_name text NOT NULL,
+    middle_name text,
+    birth_date date,
+    phone text,
+    email text,
+    address text,
+    get_rent boolean DEFAULT false,
+    must_return date
+);
+
+
+CREATE TABLE Books (
+    book_id integer PRIMARY KEY DEFAULT nextval('books_seq'),
+    title text NOT NULL,
+    year integer,
+    language text,
+    pages integer,
+    author_id integer NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+);
+
+
+CREATE TABLE BookCopies (
+    copy_id integer PRIMARY KEY DEFAULT nextval('copies_seq'),
+    book_id integer NOT NULL,
+    is_available boolean DEFAULT true,
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+
+CREATE TABLE ReaderContacts (
+    user_id integer PRIMARY KEY,
+    email text,
+    phone text,
+    address text,
+    FOREIGN KEY (user_id) REFERENCES Readers(user_id)
+);
+
+
+CREATE TABLE Loans (
+    loan_id integer PRIMARY KEY DEFAULT nextval('loans_seq'),
+    user_id integer NOT NULL,
+    copy_id integer NOT NULL,
+    bear_date date DEFAULT CURRENT_DATE,
+    due_date date,
+    return_date date,
+    is_returned boolean DEFAULT false,
+    FOREIGN KEY (user_id) REFERENCES Readers(user_id),
+    FOREIGN KEY (copy_id) REFERENCES BookCopies(copy_id)
+);
+
+
+CREATE TABLE Blocks (
+    block_id integer PRIMARY KEY DEFAULT nextval('blocks_seq'),
+    user_id integer NOT NULL,
+    is_blocked boolean DEFAULT false,
+    block_reason text,
+    paid_amount integer DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES Readers(user_id)
+);
+
+
+INSERT INTO Authors (last_name, first_name, middle_name) 
+VALUES 
+('Толстой', 'Лев', 'Николаевич'),
+('Достоевский', 'Фёдор', 'Михайлович'),
+('Пушкин', 'Александр', 'Сергеевич');
+
+INSERT INTO Books (title, year, language, pages, author_id) 
+VALUES 
+('Война и мир', 1869, 'Русский', 1225, 1),
+('Преступление и наказание', 1866, 'Русский', 672, 2),
+('Евгений Онегин', 1833, 'Русский', 240, 3);
+
+INSERT INTO Readers (last_name, first_name, middle_name, birth_date, phone, email, address, get_rent, must_return) 
+VALUES 
+('Иванов', 'Иван', 'Иванович', '1990-05-15', '+79161234567', 'ivanov@mail.ru', 'ул. Пушкина, д.10', false, NULL),
+('Петрова', 'Мария', 'Сергеевна', '1985-12-20', '+79167654321', 'petrova@gmail.com', 'ул. Ленина, д.25', true, '2024-01-30');
+
+
+INSERT INTO BookCopies (book_id, is_available) VALUES (1, true), (1, false), (2, true), (3, true);
+
+INSERT INTO Loans (user_id, copy_id, due_date, is_returned) 
+VALUES 
+(1, 1, '2024-02-15', false),
+(2, 3, '2024-03-01', false);
