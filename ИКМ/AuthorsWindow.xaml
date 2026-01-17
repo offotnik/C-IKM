@@ -1,0 +1,49 @@
+﻿<Window x:Class="LibraryWPFApp.AuthorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление авторами" Height="500" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Добавить" Width="90" Click="AddButton_Click"/>
+            <Button Content="Сохранить" Width="90" Margin="5,0" Click="SaveButton_Click"/>
+            <Button Content="Удалить" Width="90" Margin="5,0" Click="DeleteButton_Click"/>
+            <Button Content="Обновить" Width="90" Margin="5,0" Click="RefreshButton_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="AuthorsGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="AuthorsGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding AuthorId}" Width="60"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="150"/>
+                <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="150"/>
+                <DataGridTextColumn Header="Отчество" Binding="{Binding MiddleName}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Фамилия:" VerticalAlignment="Center"/>
+            <TextBox x:Name="LastNameBox" Grid.Column="1" Margin="5"/>
+            <TextBlock Text="Имя:" Grid.Column="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="FirstNameBox" Grid.Column="3" Margin="5,0,0,0"/>
+            <TextBlock Text="Отчество:" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="MiddleNameBox" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        </Grid>
+    </Grid>
+</Window>

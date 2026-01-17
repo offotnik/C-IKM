@@ -1,0 +1,17 @@
+﻿<Window x:Class="LibraryWPFApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Библиотечная система IKM" Height="400" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="Выберите таблицу для управления:" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <Button Content="Авторы" Height="30" Click="AuthorsButton_Click"/>
+            <Button Content="Книги" Height="30" Click="BooksButton_Click"/>
+            <Button Content="Читатели" Height="30" Click="ReadersButton_Click"/>
+            <Button Content="Экземпляры книг" Height="30" Click="CopiesButton_Click"/>
+            <Button Content="Выдачи" Height="30" Click="LoansButton_Click"/>
+            <Button Content="Блокировки" Height="30" Click="BlocksButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

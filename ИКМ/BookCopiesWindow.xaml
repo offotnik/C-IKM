@@ -1,0 +1,44 @@
+﻿<Window x:Class="LibraryWPFApp.BookCopiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Экземпляры книг" Height="450" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Добавить" Width="90" Click="AddButton_Click"/>
+            <Button Content="Сохранить" Width="90" Margin="5,0" Click="SaveButton_Click"/>
+            <Button Content="Удалить" Width="90" Margin="5,0" Click="DeleteButton_Click"/>
+            <Button Content="Обновить" Width="90" Margin="5,0" Click="RefreshButton_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="CopiesGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="CopiesGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding CopyId}" Width="60"/>
+                <DataGridTextColumn Header="Книга ID" Binding="{Binding BookId}" Width="80"/>
+                <DataGridTextColumn Header="Доступен" Binding="{Binding IsAvailable, StringFormat=\{0:да/нет\}}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Книга:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="BookCombo" Grid.Column="1" Margin="5"
+                      DisplayMemberPath="Title" SelectedValuePath="BookId"/>
+
+            <TextBlock Text="Доступен:" Grid.Column="2" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <CheckBox x:Name="AvailableCheck" Grid.Column="3" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

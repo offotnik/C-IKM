@@ -1,0 +1,61 @@
+﻿<Window x:Class="LibraryWPFApp.BooksWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Книги" Height="550" Width="700">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Добавить" Width="90" Click="AddButton_Click"/>
+            <Button Content="Сохранить" Width="90" Margin="5,0" Click="SaveButton_Click"/>
+            <Button Content="Удалить" Width="90" Margin="5,0" Click="DeleteButton_Click"/>
+            <Button Content="Обновить" Width="90" Margin="5,0" Click="RefreshButton_Click"/>
+        </StackPanel>
+
+        <DataGrid x:Name="BooksGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" SelectionUnit="FullRow" SelectionChanged="BooksGrid_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding BookId}" Width="60"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="200"/>
+                <DataGridTextColumn Header="Год" Binding="{Binding Year}" Width="80"/>
+                <DataGridTextColumn Header="Язык" Binding="{Binding Language}" Width="100"/>
+                <DataGridTextColumn Header="Страниц" Binding="{Binding Pages}" Width="80"/>
+                <DataGridTextColumn Header="Автор ID" Binding="{Binding AuthorId}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="2" Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Название:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TitleBox" Grid.Column="1" Margin="5"/>
+
+            <TextBlock Text="Год:" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBox x:Name="YearBox" Grid.Row="1" Grid.Column="1" Margin="5"/>
+
+            <TextBlock Text="Язык:" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="LanguageBox" Grid.Row="2" Grid.Column="1" Margin="5"/>
+
+            <TextBlock Text="Страниц:" Grid.Column="2" VerticalAlignment="Center"/>
+            <TextBox x:Name="PagesBox" Grid.Column="3" Margin="5,0,0,0"/>
+
+            <TextBlock Text="Автор:" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center"/>
+            <ComboBox x:Name="AuthorCombo" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0"
+                      DisplayMemberPath="LastName" SelectedValuePath="AuthorId"/>
+        </Grid>
+    </Grid>
+</Window>
